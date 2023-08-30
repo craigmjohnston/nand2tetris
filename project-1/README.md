@@ -1,17 +1,17 @@
 # Project 1 - Basic logic gates
 
 - [x] And
-- [ ] And (16bit)
-- [ ] Demultiplexer
+- [x] And (16bit)
+- [x] Demultiplexer
 - [ ] Demultiplexer (4-way)
 - [ ] Demultiplexer (8-way)
-- [ ] Multiplexer
-- [ ] Multiplexer (16bit)
+- [x] Multiplexer
+- [x] Multiplexer (16bit)
 - [ ] Multiplexer (4-way, 16bit)
 - [ ] Multiplexer (8-way, 16bit)
 - [x] Not
-- [ ] Not (16bit)
-- [ ] Or
-- [ ] Or (16bit)
-- [ ] Or (8-way)
-- [ ] Xor
+- [x] Not (16bit)
+- [x] Or
+- [x] Or (16bit)
+- [x] Or (8-way)
+- [x] Xor

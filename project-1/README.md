@@ -8,7 +8,7 @@
 - [x] Multiplexer
 - [x] Multiplexer (16bit)
 - [x] Multiplexer (4-way, 16bit)
-- [ ] Multiplexer (8-way, 16bit)
+- [x] Multiplexer (8-way, 16bit)
 - [x] Not
 - [x] Not (16bit)
 - [x] Or

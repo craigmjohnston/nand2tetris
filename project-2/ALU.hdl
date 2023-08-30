@@ -70,5 +70,14 @@ CHIP ALU {
 
     // negate
     Not16(in=cout, out=ncout);
-    Mux16(a=cout, b=ncout, sel=no, out=out);
+    Mux16(a=cout, b=ncout, sel=no, out[0..7]=fout1, out[8..15]=fout2, out[15]=nout, out=out);
+
+    // is zero flag
+    Or8Way(in=fout1, out=z1);
+    Or8Way(in=fout2, out=z2);
+    Or(a=z1, b=z2, out=notzr);
+    Not(in=notzr, out=zr);
+
+    // negative flag
+    And(a=nout, b=true, out=ng);
 }

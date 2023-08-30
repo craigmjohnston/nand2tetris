@@ -3,4 +3,4 @@
 - [x] Full-adder
 - [x] Adder
 - [x] Incrementer
-- [ ] ALU
+- [x] ALU

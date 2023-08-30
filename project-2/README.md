@@ -1,6 +1,6 @@
 # Project 2 - Adders/ALU
-- [ ] Half-adder
-- [ ] Full-adder
+- [x] Half-adder
+- [x] Full-adder
 - [ ] Adder
 - [ ] Incrementer
 - [ ] ALU

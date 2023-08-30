@@ -1,16 +1,17 @@
 # Project 1 - Basic logic gates
 
-- [ ] Nand
-- [ ] Not
 - [ ] And
-- [ ] Or
-- [ ] Xor
-- [ ] Multiplexer
+- [ ] And (16bit)
 - [ ] Demultiplexer
-- [ ] Multi-bit Not
-- [ ] Multi-bit And
-- [ ] Multi-bit Or
-- [ ] Multi-bit Multiplexer
-- [ ] Multi-way Or
-- [ ] Multi-way/Multi-bit Multiplexer
-- [ ] Multi-way/Multi-bit Demultiplexer
+- [ ] Demultiplexer (4-way)
+- [ ] Demultiplexer (8-way)
+- [ ] Multiplexer
+- [ ] Multiplexer (16bit)
+- [ ] Multiplexer (4-way, 16bit)
+- [ ] Multiplexer (8-way, 16bit)
+- [ ] Not
+- [ ] Not (16bit)
+- [ ] Or
+- [ ] Or (16bit)
+- [ ] Or (8-way)
+- [ ] Xor

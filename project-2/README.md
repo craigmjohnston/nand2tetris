@@ -2,5 +2,5 @@
 - [x] Half-adder
 - [x] Full-adder
 - [x] Adder
-- [ ] Incrementer
+- [x] Incrementer
 - [ ] ALU

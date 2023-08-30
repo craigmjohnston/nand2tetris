@@ -3,8 +3,8 @@
 - [x] And
 - [x] And (16bit)
 - [x] Demultiplexer
-- [ ] Demultiplexer (4-way)
-- [ ] Demultiplexer (8-way)
+- [x] Demultiplexer (4-way)
+- [x] Demultiplexer (8-way)
 - [x] Multiplexer
 - [x] Multiplexer (16bit)
 - [x] Multiplexer (4-way, 16bit)

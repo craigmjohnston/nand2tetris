@@ -7,7 +7,7 @@
 - [ ] Demultiplexer (8-way)
 - [x] Multiplexer
 - [x] Multiplexer (16bit)
-- [ ] Multiplexer (4-way, 16bit)
+- [x] Multiplexer (4-way, 16bit)
 - [ ] Multiplexer (8-way, 16bit)
 - [x] Not
 - [x] Not (16bit)

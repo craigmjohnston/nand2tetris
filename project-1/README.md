@@ -9,7 +9,7 @@
 - [ ] Multiplexer (16bit)
 - [ ] Multiplexer (4-way, 16bit)
 - [ ] Multiplexer (8-way, 16bit)
-- [ ] Not
+- [x] Not
 - [ ] Not (16bit)
 - [ ] Or
 - [ ] Or (16bit)

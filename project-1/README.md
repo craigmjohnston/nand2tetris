@@ -1,6 +1,6 @@
 # Project 1 - Basic logic gates
 
-- [ ] And
+- [x] And
 - [ ] And (16bit)
 - [ ] Demultiplexer
 - [ ] Demultiplexer (4-way)

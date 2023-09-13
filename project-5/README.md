@@ -1,5 +1,5 @@
 # Project 5 - Computer architecture
 
-- [ ] Memory
+- [x] Memory
 - [ ] CPU
 - [ ] Computer

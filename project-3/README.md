@@ -2,7 +2,7 @@
 
 - [x] Bit
 - [x] Register
-- [ ] RAM (8-bit)
+- [x] RAM (8-bit)
 - [ ] RAM (64-bit)
 - [ ] RAM (512-bit)
 - [ ] RAM (4k-bit)

@@ -1,4 +1,4 @@
 # Project 4 - Machine language
 
-- [ ] Multiplication
+- [x] Multiplication
 - [ ] I/O handling

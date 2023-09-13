@@ -25,6 +25,18 @@
  * than to the address resulting from executing the current instruction. 
  */
 
+ /* mxxaccccccdddjjj
+    m: 0 if C instruction, 1 if A instruction
+    x: ignored
+    a: comp - ALU fed from A or inM
+    c: comp - ALU function
+    d: dest - which registers take ALU output
+    j: jump - which instruction to fetch next
+ */
+
+ // if A instruction, load inM into A register
+
+
 CHIP CPU {
 
     IN  inM[16],         // M value input  (M = contents of RAM[A])
@@ -40,4 +52,25 @@ CHIP CPU {
 
     PARTS:
     // Put your code here:
+
+    Register(in=inM, load=instruction[15], out=outa); // A
+    
+    // Not(in=instruction[15], out=loadD);
+    // Register(in=in, load=loadd, out=outd); // D
+    
+    ALU(
+        x=outd, 
+        y=outa, 
+        zx=instruction[11], 
+        nx=instruction[10], 
+        zy=instruction[9],
+        ny=instruction[8], 
+        f=instruction[7], 
+        no=instruction[6], 
+        out=outalu, 
+        zr=outzero, 
+        ng=outneg
+    );
+
+    PC(in=in, load=load, inc=increment, reset=reset, out=out);
 }

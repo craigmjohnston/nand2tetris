@@ -7,4 +7,4 @@
 - [x] RAM (512-bit)
 - [x] RAM (4k-bit)
 - [x] RAM (16k-bit)
-- [ ] Counter
+- [x] Counter

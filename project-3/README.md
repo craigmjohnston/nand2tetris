@@ -6,5 +6,5 @@
 - [x] RAM (64-bit)
 - [x] RAM (512-bit)
 - [x] RAM (4k-bit)
-- [ ] RAM (16k-bit)
+- [x] RAM (16k-bit)
 - [ ] Counter

@@ -1,7 +1,7 @@
 # Project 3 - Counters/Registers/RAM
 
 - [x] Bit
-- [ ] Register
+- [x] Register
 - [ ] RAM (8-bit)
 - [ ] RAM (64-bit)
 - [ ] RAM (512-bit)

@@ -36,6 +36,9 @@
 
  // if A instruction, load inM into A register
 
+// d[0] = store in RAM[A]
+// d[1] = store in D
+// d[2] = store in A
 
 CHIP CPU {
 
@@ -51,26 +54,67 @@ CHIP CPU {
         pc[15];          // address of next instruction
 
     PARTS:
-    // Put your code here:
 
-    Register(in=inM, load=instruction[15], out=outa); // A
+    Not(in=instruction[15], out=ainstruct);
+
+    // A register
+    Mux16(a=outalu, b=instruction, sel=ainstruct, out=ina); // if A instruct, use inM, otherwise use ALU output
+    Or(a=ainstruct, b=instruction[5], out=loada); // either A instruct or d[2] flag
+    ARegister(in=ina, load=loada, out=outa, out[0..14]=addressM); // A register
     
-    // Not(in=instruction[15], out=loadD);
-    // Register(in=in, load=loadd, out=outd); // D
-    
+    // D register
+    And(a=instruction[15], b=instruction[4], out=loadd); // load D if NOT A-instruct AND d[1] flag
+    DRegister(in=outalu, load=loadd, out=outd);
+
+    // ALU
+    Mux16(a=outa, b=inM, sel=instruction[12], out=inalu);
     ALU(
         x=outd, 
-        y=outa, 
+        y=inalu, 
         zx=instruction[11], 
         nx=instruction[10], 
         zy=instruction[9],
         ny=instruction[8], 
         f=instruction[7], 
         no=instruction[6], 
-        out=outalu, 
-        zr=outzero, 
+        out=outalu,
+        out=outM,
+        zr=outzero,
         ng=outneg
     );
 
-    PC(in=in, load=load, inc=increment, reset=reset, out=out);
+    // store in RAM[A]
+    And(a=instruction[15], b=instruction[3], out=writeM); // c-instruct AND d[0]
+
+    // jumping
+
+    // 0 0 0 = no jump
+    // 0 0 1 = comp >  0 -> jump
+    // 0 1 0 = comp == 0 -> jump
+    // 0 1 1 = comp >= 0 -> jump
+    // 1 0 0 = comp <  0 -> jump
+    // 1 0 1 = comp != 0 -> jump
+    // 1 1 0 = comp <= 0 -> jump
+    // 1 1 1 = jump
+
+    // j[0] (> 0) I think this is an XNOR gate, but we haven't got one of them
+    // could be XOR -> NOT to save a gate
+    Not(in=outzero, out=notzero);
+    Not(in=outneg, out=notneg);
+    And(a=notzero, b=notneg, out=outpos);    
+    // j[1] (= 0) : outzero
+    // j[2] (< 0) : outneg
+
+    And(a=instruction[0], b=outpos, out=jgt);
+    And(a=instruction[1], b=outzero, out=jeq);
+    And(a=instruction[2], b=outneg, out=jlt);
+
+    Or(a=jgt, b=jeq, out=jgte);
+    Or(a=jgte, b=jlt, out=jmp);
+
+    // PC
+    Not(in=jmp, out=notjmp);
+    Or(a=notjmp, b=ainstruct, out=incpc);
+    Not(in=incpc, out=loadpc);
+    PC(in=outa, load=loadpc, inc=incpc, reset=reset, out[0..14]=pc);
 }

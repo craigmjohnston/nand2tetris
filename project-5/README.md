@@ -2,4 +2,4 @@
 
 - [x] Memory
 - [x] CPU
-- [ ] Computer
+- [x] Computer

@@ -16,12 +16,12 @@ type Parser struct {
 	Jump            string
 }
 
-type InstructionType string
+type InstructionType int
 
 const (
-	AInstruction InstructionType = "A_INSTRUCTION"
-	CInstruction InstructionType = "C_INSTRUCTION"
-	LInstruction InstructionType = "L_INSTRUCTION"
+	AInstruction InstructionType = iota
+	CInstruction
+	LInstruction
 )
 
 func NewParser(source string) *Parser {
@@ -32,10 +32,14 @@ func NewParser(source string) *Parser {
 	}
 }
 
-// advance parses the next line of the source and sets the
+// Advance parses the next line of the source and sets the
 // values on the Parser struct
 func (p *Parser) Advance() {
 	p.skipWhitespace()
+
+	if p.peek(2) == "//" {
+		p.skipLine()
+	}
 
 	if p.peek(1) == "@" {
 		p.parseAInstruction()
@@ -69,6 +73,23 @@ func (p *Parser) peek(length int) string {
 // skip advances the position by the specified length
 func (p *Parser) skip(length int) {
 	p.pos += length
+}
+
+func (p *Parser) skipLine() {
+	p.skipUntil("\n")
+}
+
+func (p *Parser) skipUntil(match string) bool {
+	matched := 0
+	for ; p.pos < len(p.source) && matched < len(match); p.pos++ {
+		if p.source[p.pos] == match[matched] {
+			matched += 1
+		} else {
+			matched = 0
+		}
+	}
+
+	return matched == len(match)
 }
 
 // take returns a slice of a specified length from the current

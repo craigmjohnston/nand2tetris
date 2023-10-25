@@ -1,6 +1,7 @@
 package main
 
 import (
+	"strings"
 	"unicode"
 )
 
@@ -43,11 +44,11 @@ func (p *Parser) Advance() {
 
 	if p.peek(1) == "@" {
 		p.parseAInstruction()
+	} else if p.peek(1) == "(" {
+		p.parseLInstruction()
 	} else {
 		p.parseCInstruction()
 	}
-
-	// todo L instruction ??
 
 	if p.pos == len(p.source) {
 		p.HasMoreLines = false
@@ -58,6 +59,18 @@ func (p *Parser) parseAInstruction() {
 	p.InstructionType = AInstruction
 	p.skip(1) // @
 	p.Symbol = p.takeLine()
+}
+
+func (p *Parser) parseLInstruction() {
+	p.InstructionType = LInstruction
+	p.skip(1) // (
+	line := p.takeLine()
+
+	if line[len(line)-1:] != ")" {
+		panic("no closing brace for L-instruction")
+	}
+
+	p.Symbol = line[:len(line)-1]
 }
 
 func (p *Parser) parseCInstruction() {
@@ -106,7 +119,7 @@ func (p *Parser) takeLine() string {
 	length := 0
 	for ; p.pos+length < len(p.source) && p.source[p.pos+length] != '\n'; length++ {
 	}
-	return p.take(length)
+	return strings.TrimRightFunc(p.take(length), unicode.IsSpace)
 }
 
 // skipWhitespace advances the position until it reaches a

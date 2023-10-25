@@ -33,7 +33,7 @@ func main() {
 
 	for parser.HasMoreLines {
 		parser.Advance()
-		fmt.Println(parser.Symbol)
+		fmt.Println(parser.InstructionType, parser.Symbol)
 	}
 
 	// output

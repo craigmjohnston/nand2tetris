@@ -89,13 +89,8 @@ func booltob(value bool) string {
 	return "0"
 }
 
-func (Code) ToBinary(input string) string {
-	numberValue, err := strconv.Atoi(input)
-	if err != nil {
-		panic(err)
-	}
-
-	formatted := strconv.FormatInt(int64(numberValue), 2)
+func (Code) ToBinary(input int64) string {
+	formatted := strconv.FormatInt(input, 2)
 
 	if len(formatted) < 15 {
 		formatted = strings.Repeat("0", 15-len(formatted)) + formatted

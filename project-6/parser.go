@@ -85,9 +85,16 @@ func (p *Parser) parseCInstruction() {
 	p.InstructionType = CInstruction
 	line := p.takeLine()
 	start := 0
+	end := len(line)
 	for i := 0; i < len(line); i++ {
 		if unicode.IsSpace(rune(line[i])) {
 			continue
+		}
+
+		if line[i] == '/' && len(line) > i+1 && line[i+1] == '/' {
+			// we've hit a comment
+			end = i
+			break
 		}
 
 		if line[i] == '=' {
@@ -107,11 +114,11 @@ func (p *Parser) parseCInstruction() {
 		}
 	}
 
-	if start < len(line) {
+	if start < end {
 		if p.Comp != "" {
-			p.Jump = trimSpace(line[start:len(line)])
+			p.Jump = trimSpace(line[start:end])
 		} else {
-			p.Comp = trimSpace(line[start:len(line)])
+			p.Comp = trimSpace(line[start:end])
 		}
 	}
 }

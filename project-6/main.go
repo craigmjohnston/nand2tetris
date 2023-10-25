@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
@@ -30,18 +29,35 @@ func main() {
 	}
 
 	parser := NewParser(string(source))
+	code := Code{}
+
+	output := ""
 
 	for parser.HasMoreLines {
 		parser.Advance()
 		if parser.InstructionType == CInstruction {
-			fmt.Printf("%d DEST: %s, COMP: %s, JUMP: %s", parser.InstructionType, parser.Dest, parser.Comp, parser.Jump)
-			fmt.Println()
+			//fmt.Printf("%d DEST: %s, COMP: %s, JUMP: %s", parser.InstructionType, parser.Dest, parser.Comp, parser.Jump)
+			//fmt.Println()
+			encoded := code.CInstruction(parser.Dest, parser.Comp, parser.Jump)
+			output += encoded
+			//fmt.Println(encoded)
 		} else {
-			fmt.Println(parser.InstructionType, parser.Symbol)
+			//fmt.Println(parser.InstructionType, parser.Symbol)
+			encoded := "0" + code.ToBinary(parser.Symbol)
+			output += encoded
+			//fmt.Println(encoded)
 		}
+
+		output += "\n"
 	}
+
+	//fmt.Println(output)
 
 	// output
 	outputFilename := strings.TrimSuffix(filename, fileext) + ".hack"
-	fmt.Println(outputFilename)
+	//fmt.Println(outputFilename)
+
+	if err := os.WriteFile(outputFilename, []byte(output), os.ModePerm); err != nil {
+		panic(err)
+	}
 }

@@ -38,17 +38,22 @@ func NewParser(source string) *Parser {
 func (p *Parser) Advance() {
 	p.skipWhitespace()
 
-	if p.peek(2) == "//" {
+	for p.peek(2) == "//" {
 		p.skipLine()
+		p.skipWhitespace()
 	}
 
-	if p.peek(1) == "@" {
-		p.parseAInstruction()
-	} else if p.peek(1) == "(" {
-		p.parseLInstruction()
-	} else {
-		p.parseCInstruction()
+	if p.pos < len(p.source) {
+		if p.peek(1) == "@" {
+			p.parseAInstruction()
+		} else if p.peek(1) == "(" {
+			p.parseLInstruction()
+		} else {
+			p.parseCInstruction()
+		}
 	}
+
+	p.skipWhitespace()
 
 	if p.pos == len(p.source) {
 		p.HasMoreLines = false
@@ -74,6 +79,9 @@ func (p *Parser) parseLInstruction() {
 }
 
 func (p *Parser) parseCInstruction() {
+	p.Dest = ""
+	p.Comp = ""
+	p.Jump = ""
 	p.InstructionType = CInstruction
 	line := p.takeLine()
 	start := 0
@@ -99,7 +107,7 @@ func (p *Parser) parseCInstruction() {
 		}
 	}
 
-	if start < len(line)-1 {
+	if start < len(line) {
 		if p.Comp != "" {
 			p.Jump = trimSpace(line[start:len(line)])
 		} else {
@@ -115,7 +123,16 @@ func trimSpace(value string) string {
 // peek returns a slice of a specified length from the current
 // position in the source, but does not advance the position
 func (p *Parser) peek(length int) string {
+	length = p.clampLength(length)
 	return p.source[p.pos : p.pos+length]
+}
+
+func (p *Parser) clampLength(length int) int {
+	if p.pos+length > len(p.source) {
+		return len(p.source) - p.pos
+	}
+
+	return length
 }
 
 // skip advances the position by the specified length
@@ -143,6 +160,7 @@ func (p *Parser) skipUntil(match string) bool {
 // take returns a slice of a specified length from the current
 // position in the source, advancing the position
 func (p *Parser) take(length int) string {
+	length = p.clampLength(length)
 	output := p.source[p.pos : p.pos+length]
 	p.pos += length
 	return output

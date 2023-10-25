@@ -74,7 +74,42 @@ func (p *Parser) parseLInstruction() {
 }
 
 func (p *Parser) parseCInstruction() {
-	panic("implement")
+	p.InstructionType = CInstruction
+	line := p.takeLine()
+	start := 0
+	for i := 0; i < len(line); i++ {
+		if unicode.IsSpace(rune(line[i])) {
+			continue
+		}
+
+		if line[i] == '=' {
+			if p.Dest != "" {
+				panic("dest already defined")
+			}
+
+			p.Dest = trimSpace(line[start:i])
+			start = i + 1
+		} else if line[i] == ';' {
+			if p.Comp != "" {
+				panic("comp already defined")
+			}
+
+			p.Comp = trimSpace(line[start:i])
+			start = i + 1
+		}
+	}
+
+	if start < len(line)-1 {
+		if p.Comp != "" {
+			p.Jump = trimSpace(line[start:len(line)])
+		} else {
+			p.Comp = trimSpace(line[start:len(line)])
+		}
+	}
+}
+
+func trimSpace(value string) string {
+	return strings.TrimFunc(value, unicode.IsSpace)
 }
 
 // peek returns a slice of a specified length from the current

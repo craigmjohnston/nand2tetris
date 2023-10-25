@@ -33,7 +33,12 @@ func main() {
 
 	for parser.HasMoreLines {
 		parser.Advance()
-		fmt.Println(parser.InstructionType, parser.Symbol)
+		if parser.InstructionType == CInstruction {
+			fmt.Printf("%d DEST: %s, COMP: %s, JUMP: %s", parser.InstructionType, parser.Dest, parser.Comp, parser.Jump)
+			fmt.Println()
+		} else {
+			fmt.Println(parser.InstructionType, parser.Symbol)
+		}
 	}
 
 	// output

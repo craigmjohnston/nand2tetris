@@ -6,8 +6,9 @@ import (
 )
 
 type Parser struct {
-	source string
-	pos    int
+	source      string
+	sourceRunes []rune
+	pos         int
 
 	HasMoreLines    bool
 	InstructionType InstructionType
@@ -28,8 +29,9 @@ const (
 func NewParser(source string) *Parser {
 	return &Parser{
 		source:       source,
+		sourceRunes:  []rune(source),
 		pos:          0,
-		HasMoreLines: true,
+		HasMoreLines: len(source) > 0,
 	}
 }
 
@@ -186,7 +188,7 @@ func (p *Parser) takeLine() string {
 // non-whitespace character
 func (p *Parser) skipWhitespace() {
 	for ; p.pos < len(p.source); p.pos++ {
-		if !unicode.IsSpace([]rune(p.source)[p.pos]) {
+		if !unicode.IsSpace(p.sourceRunes[p.pos]) {
 			break
 		}
 	}

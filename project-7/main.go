@@ -12,5 +12,5 @@ func main() {
 	source := string(dat)
 	t := Translator{}
 	output, err := t.Translate(source)
-	err = os.WriteFile("output/SimpleAdd.hack", []byte(output), os.ModePerm)
+	err = os.WriteFile("output/SimpleAdd.asm", []byte(output), os.ModePerm)
 }
